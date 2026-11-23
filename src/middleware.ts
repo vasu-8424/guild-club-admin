@@ -65,10 +65,11 @@ export async function middleware(request: NextRequest) {
   }
 
   const isLoginPage = pathname === "/login";
+  const isPrivacyPolicy = pathname === "/privacypolicy" || pathname.startsWith("/privacypolicy");
   const isApiRoute = pathname.startsWith("/api");
 
   // 2. Unauthenticated user trying to access protected dashboard pages
-  if (!user && !isLoginPage && !isApiRoute) {
+  if (!user && !isLoginPage && !isPrivacyPolicy && !isApiRoute) {
     const loginUrl = request.nextUrl.clone();
     loginUrl.pathname = "/login";
     return NextResponse.redirect(loginUrl);
